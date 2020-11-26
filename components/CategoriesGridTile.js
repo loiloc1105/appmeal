@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Platform, TouchableNativeFeedback } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Platform, TouchableNativeFeedback , Dimensions} from 'react-native'
 
+const { width, height} = Dimensions.get("window");
 const CategoriesGridTile = (props) => {
     let TouchableNativeFeedbackcpm = TouchableOpacity;
     if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -23,20 +24,20 @@ const CategoriesGridTile = (props) => {
 const styles = StyleSheet.create({
     gridItem: {
         flex: 1,
-        margin: 10,
-        height: 150,
-        borderRadius: 10,
-        overflow: 'hidden'
+        margin: width * 0.035,
+        height: width * 0.35,
+        borderRadius: width * 0.03,
+        overflow: Platform.OS === 'android' && Platform.OS >= 21 ? 'hidden' : 'visible',
+        elevation: width * 0.03,
     },
     container: {
         flex: 1,
-        borderRadius: 10,
+        borderRadius: width * 0.03,
         shadowColor: 'black',
         shadowOpacity: 0.26,
         shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 10,
-        elevation: 3,
-        padding: 10,
+        shadowRadius: width * 0.04,
+        padding: width * 0.03,
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
     },

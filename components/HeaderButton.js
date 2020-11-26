@@ -2,7 +2,7 @@ import React from "react";
 import { Platform } from "react-native";
 import { HeaderButton } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
-import  Colors from '../contants/colors'
+import Colors from "../contants/colors";
 
 const CustomHeaderButton = (props) => {
   return (
@@ -10,7 +10,7 @@ const CustomHeaderButton = (props) => {
       {...props}
       IconComponent={Ionicons}
       iconSize={20}
-      color={Platform.OS === "android" ? 'white' : Colors.primaryColor}
+      color={Platform.OS === "android" ? "white" : Colors.primaryColor}
     />
   );
 };

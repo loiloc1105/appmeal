@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Dimensions
 } from "react-native";
+import DefaultText from './DefaultText'
 
 const { width, height } = Dimensions.get("window");
 
@@ -27,9 +28,9 @@ const MealItem = (props) => {
           </ImageBackground>
         </View>
         <View style={{ ...styles.mealRow, ...styles.contentMeal }}>
-          <Text>{props.duration}</Text>
-          <Text>{props.complexity.toUpperCase()}</Text>
-          <Text>{props.affordability.toUpperCase()}</Text>
+          <DefaultText>{props.duration}m</DefaultText>
+          <DefaultText>{props.complexity.toUpperCase()}</DefaultText>
+          <DefaultText>{props.affordability.toUpperCase()}</DefaultText>
         </View>
       </TouchableOpacity>
     </View>

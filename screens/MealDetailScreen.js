@@ -1,31 +1,50 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Dimensions
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import HeaderButton from "../components/HeaderButton";
-
+import DefaultText from "../components/DefaultText";
 import { MEALS } from "../data/dummy-data";
+
+const { width, height } = Dimensions.get("window");
+
+const ListItem = (props) => {
+  return (
+    <View style={styles.listItem}>
+      <DefaultText>{props.children}</DefaultText>
+    </View>
+  );
+};
 
 const MealDetailScreen = (props) => {
   const mealId = props.navigation.getParam("mealId");
   const selectMealId = MEALS.find((meal) => meal.id === mealId);
 
   return (
-    <View style={styles.container}>
-      <Text>{selectMealId.title}</Text>
-      <Button
-        title="Go to Top"
-        onPress={() => {
-          props.navigation.popToTop();
-        }}
-      />
-      <Button
-        title="Go back"
-        onPress={() => {
-          props.navigation.pop();
-        }}
-      />
-    </View>
+    <ScrollView>
+      <Image source={{ uri: selectMealId.imageUrl }} style={styles.image} />
+      <View style={styles.details}>
+        <DefaultText>{selectMealId.duration}m</DefaultText>
+        <DefaultText>{selectMealId.complexity.toUpperCase()}</DefaultText>
+        <DefaultText>{selectMealId.affordability.toUpperCase()}</DefaultText>
+      </View>
+      <Text style={styles.title}>Ingredients</Text>
+      {selectMealId.ingredients.map((ingredient) => (
+        <ListItem key={ingredient}>{ingredient}</ListItem>
+      ))}
+      <Text style={styles.title}>Steps</Text>
+      {selectMealId.steps.map((step) => (
+        <ListItem key={step}>{step}</ListItem>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -35,7 +54,7 @@ MealDetailScreen.navigationOptions = (navigationData) => {
 
   return {
     headerTitle: selectMealId.title,
-    headerRight: () => 
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Favorite"
@@ -45,17 +64,31 @@ MealDetailScreen.navigationOptions = (navigationData) => {
           }}
         />
       </HeaderButtons>
-    
+    )
   };
 };
 
-export default MealDetailScreen;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+  image: {
+    width: width,
+    height: width * 0.5
+  },
+  details: {
+    flexDirection: "row",
+    padding: width * 0.04,
+    justifyContent: "space-around"
+  },
+  title: {
+    fontFamily: "open-san-bold",
+    fontSize: 22,
+    textAlign: "center"
+  },
+  listItem:{
+    borderWidth : 1,
+    borderColor : '#ccc',
+    marginHorizontal: width * 0.05,
+    marginVertical: width * 0.02,
+    padding : width * 0.05
   }
 });
+export default MealDetailScreen;
