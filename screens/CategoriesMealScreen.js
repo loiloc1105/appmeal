@@ -1,9 +1,10 @@
 import React from "react";
-
-import { CATEGORIES, MEALS } from "../data/dummy-data";
+import { StyleSheet, View } from "react-native";
+import { CATEGORIES } from "../data/dummy-data";
+import { useSelector } from "react-redux";
 
 // import Colors from '../contants/colors';
-
+import DefaultText  from "../components/DefaultText";
 import MealList from "../components/MealList";
 
 const CategoriesMealScreen = (props) => {
@@ -12,10 +13,20 @@ const CategoriesMealScreen = (props) => {
   //so sanh id lay dc tu database
   // const selectedCategory = CATEGORIES.find(cat => cat.id === catId)
 
+  const avilableMeals = useSelector((state) => state.meals.filterMeals);
+
   // filter trong data MEAL
-  const displayMeal = MEALS.filter(
+  const displayMeal = avilableMeals.filter(
     (meals) => meals.categoryID.indexOf(catId) >= 0
   );
+
+  if(displayMeal.length === 0) {
+    return (
+      <View style={styles.content} >
+        <DefaultText>No meals found, check filter again!!!</DefaultText>
+      </View>
+    );
+  }
 
   return <MealList listData={displayMeal} navigation={props.navigation} />;
 };
@@ -30,5 +41,13 @@ CategoriesMealScreen.navigationOptions = (navigationData) => {
     headerTitle: selectCategory.title
   };
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 export default CategoriesMealScreen;
